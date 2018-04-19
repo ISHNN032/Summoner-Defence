@@ -17,5 +17,11 @@ public class InGameUI : MonoBehaviour {
             MenuManager.Instance.OpenMenu<PauseMenu>();
         });
         SkillButtons = SkillButtonLayout.GetComponentsInChildren<Button>();
+        for (int i=0; i<SkillButtons.Length -1; ++i)
+        {
+            SkillButtons[i].onClick.AddListener(()=> {
+
+            });
+        }
     }
 }
