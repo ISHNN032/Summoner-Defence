@@ -22,6 +22,7 @@ public class PlayerCamera : MonoBehaviour {
             case Move.Left: offset.x = -4; break;
             case Move.Right: offset.x = 4; break;
         }
-        this.transform.position = Vector3.Lerp(this.transform.position, new Vector3(PlayerController.Instance.transform.position.x + offset.x, offset.y, offset.z), 0.02f);
+        this.transform.position = Vector3.Lerp(this.transform.position,
+            new Vector3(PlayerController.Instance.transform.position.x + offset.x, offset.y, offset.z), 0.02f);
     }
 }

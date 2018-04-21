@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Summon<T> : Summon where T : Summon<T>{
     protected virtual void Awake()
     {
-        Debug.Log("a");
+
     }
 }
 
