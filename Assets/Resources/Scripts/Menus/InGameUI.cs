@@ -26,5 +26,6 @@ public class InGameUI : MonoBehaviour {
     public void Summon(int index)
     {
         Debug.Log("Summon #" + index);
+        Summoner.Instance.SummonUnit<ArmorSpilt>();
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class MenuManager : MonoBehaviour {
     public static MenuManager Instance { get; private set; }
 
-    public PauseMenu PauseMenuPreFeb;
+    public PauseMenu PauseMenuPreFab;
 
     private Stack<Menu> menuStack = new Stack<Menu>();
 
@@ -20,8 +20,8 @@ public class MenuManager : MonoBehaviour {
 
     public void OpenMenu<T>() where T : Menu
     {
-        var prefeb = GetPreFeb<T>();
-        var instance = Instantiate<Menu>(prefeb, transform);
+        var prefab = GetPreFab<T>();
+        var instance = Instantiate<Menu>(prefab, this.transform);
 
         if(menuStack.Count > 0)
             menuStack.Peek().gameObject.SetActive(false);
@@ -38,11 +38,11 @@ public class MenuManager : MonoBehaviour {
             menuStack.Pop().gameObject.SetActive(true);
     }
 
-    public T GetPreFeb<T>() where T : Menu
+    public T GetPreFab<T>() where T : Menu
     {
         if(typeof(T) == typeof(PauseMenu))
         {
-            return PauseMenuPreFeb as T;
+            return PauseMenuPreFab as T;
         }
         throw new MissingReferenceException();
     }

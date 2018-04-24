@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
     private static GameManager sInstance = null;
@@ -37,5 +38,20 @@ public class GameManager : MonoBehaviour {
     private void OnDestroy()
     {
         sInstance = null;
+    }
+
+    public void ChangeScene(int scene_num)
+    {
+        SceneManager.LoadScene(scene_num);
+    }
+
+    public void Summon_Unit()
+    {
+        
+    }
+
+    public void Summon_Enemy()
+    {
+
     }
 }
