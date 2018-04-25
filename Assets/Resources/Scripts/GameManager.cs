@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour {
 
     private void Awake()
     {
+        Application.targetFrameRate = 30;
+
         if (sInstance == null)
             sInstance = this;
 
@@ -43,15 +45,5 @@ public class GameManager : MonoBehaviour {
     public void ChangeScene(int scene_num)
     {
         SceneManager.LoadScene(scene_num);
-    }
-
-    public void Summon_Unit()
-    {
-        
-    }
-
-    public void Summon_Enemy()
-    {
-
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class MoveButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField]
-    public Move direction;
+    public Direction direction;
 
     public void OnPointerEnter(PointerEventData eventData)
     {

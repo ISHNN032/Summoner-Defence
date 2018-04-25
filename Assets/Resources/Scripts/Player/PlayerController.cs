@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Move { Left = -1, Right = 1 }
+public enum Direction { Left = -1, Right = 1 }
 public class PlayerController : MonoBehaviour {
     public static PlayerController Instance { get; private set; }
-    public float speed = 2f;
+
+    [SerializeField] private float speed = 1f;
 
     private void Awake()
     {
@@ -16,7 +17,7 @@ public class PlayerController : MonoBehaviour {
         Instance = null;
     }
 
-    public void MovePlayer(Move direction)
+    public void MovePlayer(Direction direction)
     {
         this.transform.Translate(Vector3.Lerp(Vector3.zero, new Vector3((float)direction * speed, 0, 0), 0.1f));
         PlayerCamera.Instance.MoveCamera(direction);
