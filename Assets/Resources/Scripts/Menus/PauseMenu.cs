@@ -18,6 +18,7 @@ public class PauseMenu : Menu<PauseMenu>
 
     public override void OnBackPressed()
     {
+        Time.timeScale = 1;
         MenuManager.Instance.CloseMenu();
     }
 }

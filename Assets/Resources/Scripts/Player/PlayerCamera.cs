@@ -7,8 +7,8 @@ public class PlayerCamera : MonoBehaviour {
 
     public GameObject OverL_Obj;
     public GameObject OverR_Obj;
-    public Vector3 OverL;
-    public Vector3 OverR;
+    private Vector3 OverL;
+    private Vector3 OverR;
 
     [SerializeField] private Vector3 OriginOffset = new Vector3(2, 0, -10);
     [SerializeField] private float fallowSpeed = 0.02f;
@@ -28,7 +28,7 @@ public class PlayerCamera : MonoBehaviour {
         Instance = null;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (OverL.x > Camera.main.ViewportToWorldPoint(Vector3.zero).x)
         {
@@ -38,7 +38,6 @@ public class PlayerCamera : MonoBehaviour {
         {
             if (p_direction == Direction.Right) return;
         }
-
         this.transform.position = Vector3.Lerp(this.transform.position,
             new Vector3(PlayerController.Instance.transform.position.x,0,0) + offset, fallowSpeed);
     }

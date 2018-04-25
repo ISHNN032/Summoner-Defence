@@ -10,20 +10,11 @@ public class MoveButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        StartCoroutine("MovePlayer");
+        PlayerController.Instance.MovePlayer(direction);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        StopCoroutine("MovePlayer");
-    }
-    
-    IEnumerator MovePlayer()
-    {
-        while(true)
-        {
-            PlayerController.Instance.MovePlayer(direction);
-            yield return null;
-        }
+        PlayerController.Instance.StopPlayer();
     }
 }

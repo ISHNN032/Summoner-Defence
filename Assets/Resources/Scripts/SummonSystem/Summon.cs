@@ -45,7 +45,8 @@ public abstract class Summon<T> : Summon where T : Summon<T>{
     {
         while (true)
         {
-            if(Time.timeScale != 0)
+            if(Time.timeScale == 0) yield return null;
+            else
             {
                 Debug.Log("c");
                 this.transform.Translate(Vector3.Lerp(Vector3.zero, new Vector3((float)direction * speed, 0, 0), 0.1f));

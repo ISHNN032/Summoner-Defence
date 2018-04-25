@@ -19,12 +19,26 @@ public class PlayerController : MonoBehaviour {
 
     public void MovePlayer(Direction direction)
     {
-        this.transform.Translate(Vector3.Lerp(Vector3.zero, new Vector3((float)direction * speed, 0, 0), 0.1f));
-        PlayerCamera.Instance.MoveCamera(direction);
+        StartCoroutine("Move", direction);
+    }
+
+    public void StopPlayer()
+    {
+        StopCoroutine("Move");
     }
     
     public void Summon<T>()
     {
 
+    }
+
+    private IEnumerator Move(Direction direction)
+    {
+        PlayerCamera.Instance.MoveCamera(direction);
+        while (true)
+        {
+            this.transform.Translate(Vector2.Lerp(Vector2.zero, new Vector2((float)direction * speed, 0), 0.1f));
+            yield return null;
+        }
     }
 }
