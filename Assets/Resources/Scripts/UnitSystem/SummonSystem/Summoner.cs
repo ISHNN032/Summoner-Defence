@@ -6,7 +6,6 @@ public class Summoner : MonoBehaviour {
     public static Summoner Instance { get; private set; }
 
     private List<Summon> SummonList = new List<Summon>();
-
     public ArmorSpilt ArmorSpiltPrefab;
 
     private void Awake()
@@ -24,6 +23,8 @@ public class Summoner : MonoBehaviour {
         var instance = Instantiate<Summon>(prefab);
         instance.transform.position = this.transform.position + Vector3.right;
         SummonList.Add(instance);
+
+
     }
 
     public T GetSummonPrefab<T>() where T : Summon
