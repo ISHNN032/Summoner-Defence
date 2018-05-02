@@ -18,6 +18,11 @@ public class PlayerController : MonoBehaviour {
         Instance = null;
     }
 
+    private void Update()
+    {
+
+    }
+
     public void MovePlayer(Direction direction)
     {
         StartCoroutine("Move", direction);

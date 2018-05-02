@@ -22,10 +22,10 @@ GameObject:
   - component: {fileID: 212104309076242284}
   - component: {fileID: 61018296242765496}
   - component: {fileID: 50053605211835294}
-  - component: {fileID: 114159777694558940}
+  - component: {fileID: 114240549595633636}
   m_Layer: 8
   m_Name: Mob
-  m_TagString: Untagged
+  m_TagString: Mob
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -88,7 +88,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &114159777694558940
+--- !u!114 &114240549595633636
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -96,9 +96,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1419790191661214}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 021ed67ad2fc4a646a772d81bc14d071, type: 3}
+  m_Script: {fileID: 11500000, guid: c969d837756ac4d49b88d6cf3a4a4649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 10
   speed: 0.2
 --- !u!212 &212104309076242284
 SpriteRenderer:

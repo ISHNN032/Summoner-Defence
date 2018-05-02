@@ -9,8 +9,9 @@ public abstract class Mob<T> : Mob where T : Mob<T>
         base.Awake();
     }
 
-    protected virtual void Start()
+    protected override void Start()
     {
+        base.Start();
         Move(Direction.Left);
     }
 }

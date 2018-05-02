@@ -9,14 +9,17 @@ public abstract class Summon<T> : Summon where T : Summon<T>{
         base.Awake();
     }
 
-    protected virtual void Start()
+    protected override void Start()
     {
+        base.Start();
         Move(Direction.Right);
     }
 
     protected virtual void Update()
     {
         Control();
+        Debug.DrawLine(transform.position, transform.position + new Vector3(2, 0, 0), Color.green);
+        Debug.DrawLine(transform.position, transform.position + new Vector3(-2, 0, 0), Color.green);
     }
 
     protected override void Control()
