@@ -18,8 +18,6 @@ public abstract class Summon<T> : Summon where T : Summon<T>{
     protected virtual void Update()
     {
         Control();
-        Debug.DrawLine(transform.position, transform.position + new Vector3(2, 0, 0), Color.green);
-        Debug.DrawLine(transform.position, transform.position + new Vector3(-2, 0, 0), Color.green);
     }
 
     protected override void Control()
@@ -38,6 +36,19 @@ public abstract class Summon<T> : Summon where T : Summon<T>{
             if (Input.GetKeyDown(KeyCode.E))
             {
                 Move(Direction.Right);
+            }
+
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                mode = Mode.Capture;
+            }
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                mode = Mode.Escort;
+            }
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                mode = Mode.Exterminate;
             }
         }
     }

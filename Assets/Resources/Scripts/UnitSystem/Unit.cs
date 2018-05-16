@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Direction { Left = -1, Right = 1 }
+public enum Mode { Capture = 0, Escort, Exterminate }
+
 public abstract class Unit : MonoBehaviour
 {
     [SerializeField] protected float health = 10;
     [SerializeField] protected float speed = 0.3f;
     protected Direction direction;
+    protected Mode mode;
 
     [SerializeField] protected float disableTime = 1;
     protected WaitForSeconds wait;
@@ -23,7 +27,9 @@ public abstract class Unit : MonoBehaviour
     }
     protected virtual void Start()
     {
+        mode = Mode.Capture;
         StartCoroutine("CheckOverlap");
+        StartCoroutine("FindEnemy");
         //hitbox를 따로 두는 것 대신 오버랩 박스를 이용
     }
     protected virtual void OnTriggerEnter2D(Collider2D collision)
@@ -32,16 +38,47 @@ public abstract class Unit : MonoBehaviour
         Debug.Log(string.Format("{0} : {1}", this.name, collision.name));
     }
 
+    //정리필요 : 여기부터
+
     protected void Move(Direction direct)
     {
         StopCoroutine("MoveCoroutine");
         direction = direct;
         StartCoroutine("MoveCoroutine");
     }
+
     protected void Stop()
     {
         StopCoroutine("MoveCoroutine");
     }
+
+    protected void Escort()
+    {
+
+    }
+
+    protected void Exterminate()
+    {
+
+    }
+
+    protected IEnumerator DirectionToPlayer()
+    {
+        while (true)
+        {
+            if(PlayerController.Instance.transform.position.x < this.transform.position.x)
+            {
+                direction = Direction.Left;
+            }
+            else if (PlayerController.Instance.transform.position.x > this.transform.position.x)
+            {
+                direction = Direction.Right;
+            }
+            yield return null;
+        }
+    }
+
+    //정리필요 : 여기까지
 
     protected IEnumerator MoveCoroutine()
     {
@@ -49,7 +86,7 @@ public abstract class Unit : MonoBehaviour
         {
             if (Time.timeScale == 0) yield return null;
 
-            this.transform.Translate(Vector3.Lerp(Vector3.zero, new Vector3((float)direction * speed, 0, 0), 0.1f));
+            this.transform.Translate(Vector2.Lerp(Vector2.zero, new Vector2((float)direction * speed, 0), 0.1f));
             yield return null;
         }
     }
@@ -80,13 +117,16 @@ public abstract class Unit : MonoBehaviour
         {
             if (Time.timeScale == 0) yield return null;
 
-            var overlap = Physics2D.OverlapBox(transform.position, _collider.size, 0, 1 << 10);
-            //오버랩이 존재하며, 본인과 다른 태그의 히트박스일때
-            if (overlap != null && !this.tag.Equals(overlap.tag))
+            Debug.DrawLine(transform.position, (Vector2)transform.position + new Vector2((float)direction, 0) * 2, Color.cyan);
+            var hits = Physics2D.RaycastAll(transform.position, new Vector2((float)direction, 0), 2, 1 << 8);
+            for(int i=0; i< hits.Length; ++i)
             {
-                Debug.Log(string.Format("{0} :: {1}", this.name, overlap.name));
-                yield return wait;
-                //레이어10 (hitbox)에 해당하는 것이 충돌되었을때 지정된 초 동안 검사중지
+                var hit = hits[i];
+                if (hit && !this.tag.Equals(hit.transform.tag))
+                {
+                    Debug.Log(string.Format("{0} Found The Enemy {1}", this.name, hit.transform.name));
+                    yield return wait;
+                }
             }
             yield return null;
         }

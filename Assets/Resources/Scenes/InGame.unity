@@ -122,7 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 76139819}
   - component: {fileID: 76139818}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Back2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -319,7 +319,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 325277038}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.4, y: 0.32, z: 0}
+  m_LocalPosition: {x: 7.29, y: 4.58, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -433,7 +433,7 @@ GameObject:
   m_Component:
   - component: {fileID: 576429723}
   - component: {fileID: 576429722}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Back1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -756,7 +756,7 @@ GameObject:
   m_Component:
   - component: {fileID: 878410827}
   - component: {fileID: 878410826}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Back3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1725,7 +1725,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1460309222}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.6, y: 0.32, z: 0}
+  m_LocalPosition: {x: 5.49, y: 4.58, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1740,11 +1740,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4930964136198042, guid: 0e4cbb59963f18149ae864ea1d54a8b6, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 8.6
+      value: 11.09
       objectReference: {fileID: 0}
     - target: {fileID: 4930964136198042, guid: 0e4cbb59963f18149ae864ea1d54a8b6, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 4930964136198042, guid: 0e4cbb59963f18149ae864ea1d54a8b6, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1774,6 +1774,16 @@ Prefab:
         type: 2}
       propertyPath: disableTime
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212104309076242284, guid: 0e4cbb59963f18149ae864ea1d54a8b6,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 212104309076242284, guid: 0e4cbb59963f18149ae864ea1d54a8b6,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0e4cbb59963f18149ae864ea1d54a8b6, type: 2}
@@ -1848,7 +1858,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1577094234}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BackOverL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1912,6 +1922,16 @@ Prefab:
       propertyPath: disableTime
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 212095364184835616, guid: 23cc01aa93fde1f40b3cb64ed8763878,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 212095364184835616, guid: 23cc01aa93fde1f40b3cb64ed8763878,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 23cc01aa93fde1f40b3cb64ed8763878, type: 2}
   m_IsPrefabParent: 0
@@ -1924,7 +1944,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1609718514}
   - component: {fileID: 1609718513}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Back0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2030,7 +2050,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1786093349}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BackOverR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
