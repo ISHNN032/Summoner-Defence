@@ -10,6 +10,7 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] protected float health = 10;
     [SerializeField] protected float speed = 0.3f;
     protected Direction direction;
+    protected Direction look_direction;
     protected Mode mode;
 
     [SerializeField] protected float disableTime = 1;
@@ -38,11 +39,12 @@ public abstract class Unit : MonoBehaviour
         Debug.Log(string.Format("{0} : {1}", this.name, collision.name));
     }
 
-    //정리필요 : 여기부터
-
     protected void Move(Direction direct)
     {
+        StopCoroutine("EscortCoroutine");
+        StopCoroutine("Combat");
         StopCoroutine("MoveCoroutine");
+
         direction = direct;
         StartCoroutine("MoveCoroutine");
     }
@@ -52,9 +54,14 @@ public abstract class Unit : MonoBehaviour
         StopCoroutine("MoveCoroutine");
     }
 
-    protected void Escort()
+    protected void Capture()
     {
 
+    }
+
+    protected void Escort()
+    {
+        StartCoroutine("EscortCoroutine");
     }
 
     protected void Exterminate()
@@ -62,31 +69,55 @@ public abstract class Unit : MonoBehaviour
 
     }
 
-    protected IEnumerator DirectionToPlayer()
+    //*/코루틴에서 실행해주는 내부적인 기능함수>>
+
+    private void DirectionToPlayer()
     {
-        while (true)
+        Debug.DrawLine(transform.position, (Vector2)transform.position + Vector2.up, Color.yellow);
+        float distance = this.transform.position.x - PlayerController.Instance.transform.position.x;
+
+        if (distance > 2)
         {
-            if(PlayerController.Instance.transform.position.x < this.transform.position.x)
-            {
-                direction = Direction.Left;
-            }
-            else if (PlayerController.Instance.transform.position.x > this.transform.position.x)
-            {
-                direction = Direction.Right;
-            }
-            yield return null;
+            direction = Direction.Left;
+        }
+        else if (distance < -2)
+        {
+            direction = Direction.Right;
+        }
+        else if (distance <= 2 && distance > 0)
+        {
+            look_direction = Direction.Right;
+            StopCoroutine("MoveCoroutine");
+        }
+        else if (distance >= -2 && distance < 0)
+        {
+            look_direction = Direction.Left;
+            StopCoroutine("MoveCoroutine");
         }
     }
 
-    //정리필요 : 여기까지
+    //*/코루틴에서 실행해주는 내부적인 기능함수<<
+
+
+    protected IEnumerator EscortCoroutine()
+    {
+        while (true)
+        {
+            DirectionToPlayer();
+            yield return null;
+        }
+    }
 
     protected IEnumerator MoveCoroutine()
     {
         while (true)
         {
-            if (Time.timeScale == 0) yield return null;
-
+            if (Time.timeScale == 0) {
+                yield return null;
+                continue;
+            }
             this.transform.Translate(Vector2.Lerp(Vector2.zero, new Vector2((float)direction * speed, 0), 0.1f));
+            look_direction = direction;
             yield return null;
         }
     }
@@ -96,12 +127,17 @@ public abstract class Unit : MonoBehaviour
     {
         while (true)
         {
-            if (Time.timeScale == 0) yield return null;
+            if (Time.timeScale == 0)
+            {
+                yield return null;
+                continue;
+            }
 
             var overlap = Physics2D.OverlapBox(transform.position, _collider.size, 0, 1 << 10);
             //오버랩이 존재하며, 본인과 다른 태그의 히트박스일때
             if (overlap != null && !this.tag.Equals(overlap.tag))
             {
+
                 Debug.Log(string.Format("{0} :: {1}", this.name, overlap.name));
                 yield return wait;
                 //레이어10 (hitbox)에 해당하는 것이 충돌되었을때 지정된 초 동안 검사중지
@@ -115,18 +151,79 @@ public abstract class Unit : MonoBehaviour
     {
         while (true)
         {
-            if (Time.timeScale == 0) yield return null;
+            if (Time.timeScale == 0)
+            {
+                yield return null;
+                continue;
+            }
 
-            Debug.DrawLine(transform.position, (Vector2)transform.position + new Vector2((float)direction, 0) * 2, Color.cyan);
-            var hits = Physics2D.RaycastAll(transform.position, new Vector2((float)direction, 0), 2, 1 << 8);
+            Debug.DrawLine(transform.position, (Vector2)transform.position + new Vector2((float)look_direction, 0) * 2, Color.cyan);
+            var hits = Physics2D.RaycastAll(transform.position, new Vector2((float)look_direction, 0), 2, 1 << 8);
             for(int i=0; i< hits.Length; ++i)
             {
                 var hit = hits[i];
                 if (hit && !this.tag.Equals(hit.transform.tag))
                 {
                     Debug.Log(string.Format("{0} Found The Enemy {1}", this.name, hit.transform.name));
+                    StartCoroutine("Combat",hit.transform.gameObject);
                     yield return wait;
                 }
+            }
+            yield return null;
+        }
+    }
+
+    protected IEnumerator EFindEnemy()
+    {
+        while (true)
+        {
+            if (Time.timeScale == 0)
+            {
+                yield return null;
+                continue;
+            }
+
+            Debug.DrawLine((Vector2)transform.position + Vector2.left, (Vector2)transform.position + Vector2.right * 2, Color.cyan);
+
+            var hits = Physics2D.RaycastAll((Vector2)transform.position - Vector2.left * 2f , Vector2.right * 2f, 4, 1 << 8);
+            for (int i = 0; i < hits.Length; ++i)
+            {
+                var hit = hits[i];
+                if (hit && !this.tag.Equals(hit.transform.tag))
+                {
+                    Debug.Log(string.Format("{0} Found The Enemy {1}", this.name, hit.transform.name));
+                    StartCoroutine("Combat", hit.transform.gameObject);
+                    yield return wait;
+                }
+            }
+            yield return null;
+        }
+    }
+
+    protected IEnumerator Combat(GameObject enemy)
+    {
+        StopCoroutine("FindEnemy");
+        while (enemy != null)
+        {
+            if (Time.timeScale == 0)
+            {
+                yield return null;
+                continue;
+            }
+
+            Debug.DrawLine(transform.position, (Vector2)transform.position + Vector2.up + Vector2.left, Color.red);
+
+            if (enemy.transform.position.x + 1.2f < this.transform.position.x)
+            {
+                direction = Direction.Left;
+            }
+            else if (enemy.transform.position.x - 1.2f > this.transform.position.x)
+            {
+                direction = Direction.Right;
+            }
+            else
+            {
+                direction = 0;
             }
             yield return null;
         }

@@ -45,6 +45,7 @@ public abstract class Summon<T> : Summon where T : Summon<T>{
             if (Input.GetKeyDown(KeyCode.S))
             {
                 mode = Mode.Escort;
+                Escort();
             }
             if (Input.GetKeyDown(KeyCode.D))
             {
