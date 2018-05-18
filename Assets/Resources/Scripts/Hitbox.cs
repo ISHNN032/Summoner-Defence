@@ -5,10 +5,11 @@ using UnityEngine;
 public class Hitbox : MonoBehaviour {
 
 	void Start () {
-		
+        StartCoroutine("Active");
 	}
-
-	void Update () {
-		
-	}
+    IEnumerator Active()
+    {
+        yield return new WaitForSeconds(0.2f);
+        Destroy(this.gameObject);
+    }
 }

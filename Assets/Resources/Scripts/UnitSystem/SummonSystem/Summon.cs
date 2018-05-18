@@ -50,6 +50,7 @@ public abstract class Summon<T> : Summon where T : Summon<T>{
             if (Input.GetKeyDown(KeyCode.D))
             {
                 mode = Mode.Exterminate;
+                Exterminate();
             }
         }
     }

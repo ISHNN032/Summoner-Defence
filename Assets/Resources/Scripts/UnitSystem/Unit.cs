@@ -19,6 +19,8 @@ public abstract class Unit : MonoBehaviour
     protected Rigidbody2D _rigidbody;
     protected BoxCollider2D _collider;
 
+    [SerializeField] GameObject hitbox;
+
     protected virtual void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -37,6 +39,12 @@ public abstract class Unit : MonoBehaviour
     {
         //_rigidbody.AddForce(Vector3.right + Vector3.up * 10, ForceMode2D.Impulse);
         Debug.Log(string.Format("{0} : {1}", this.name, collision.name));
+    }
+
+    protected virtual void Attack()
+    {
+        GameObject attack = GameObject.Instantiate(hitbox,this.transform);
+        attack.transform.position = this.transform.position + new Vector3((float)look_direction,0,0);
     }
 
     protected void Move(Direction direct)
@@ -66,7 +74,7 @@ public abstract class Unit : MonoBehaviour
 
     protected void Exterminate()
     {
-
+        StartCoroutine("EFindEnemy");
     }
 
     //*/코루틴에서 실행해주는 내부적인 기능함수>>
@@ -137,7 +145,6 @@ public abstract class Unit : MonoBehaviour
             //오버랩이 존재하며, 본인과 다른 태그의 히트박스일때
             if (overlap != null && !this.tag.Equals(overlap.tag))
             {
-
                 Debug.Log(string.Format("{0} :: {1}", this.name, overlap.name));
                 yield return wait;
                 //레이어10 (hitbox)에 해당하는 것이 충돌되었을때 지정된 초 동안 검사중지
@@ -166,6 +173,7 @@ public abstract class Unit : MonoBehaviour
                 {
                     Debug.Log(string.Format("{0} Found The Enemy {1}", this.name, hit.transform.name));
                     StartCoroutine("Combat",hit.transform.gameObject);
+                    StartCoroutine("Chase", hit.transform.gameObject);
                     yield return wait;
                 }
             }
@@ -201,6 +209,15 @@ public abstract class Unit : MonoBehaviour
     }
 
     protected IEnumerator Combat(GameObject enemy)
+    {
+        while (enemy != null)
+        {
+            Attack();
+            yield return new WaitForSeconds(1);
+        }
+    }
+
+    protected IEnumerator Chase(GameObject enemy)
     {
         StopCoroutine("FindEnemy");
         while (enemy != null)
