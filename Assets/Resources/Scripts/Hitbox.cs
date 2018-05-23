@@ -9,7 +9,7 @@ public class Hitbox : MonoBehaviour {
 	}
     IEnumerator Active()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.4f);
         Destroy(this.gameObject);
     }
 }

@@ -44,15 +44,16 @@ public abstract class Unit : MonoBehaviour
     protected virtual void Attack()
     {
         GameObject attack = GameObject.Instantiate(hitbox,this.transform);
-        attack.transform.position = this.transform.position + new Vector3((float)look_direction,0,0);
+        attack.transform.Translate((float)look_direction * 0.5f,0,0);
     }
 
     protected void Move(Direction direct)
     {
         StopCoroutine("EscortCoroutine");
         StopCoroutine("Combat");
-        StopCoroutine("MoveCoroutine");
+        StopCoroutine("Chase");
 
+        StopCoroutine("MoveCoroutine");
         direction = direct;
         StartCoroutine("MoveCoroutine");
     }
@@ -60,6 +61,9 @@ public abstract class Unit : MonoBehaviour
     protected void Stop()
     {
         StopCoroutine("MoveCoroutine");
+        StopCoroutine("EscortCoroutine");
+        StopCoroutine("Combat");
+        StopCoroutine("Chase");
     }
 
     protected void Capture()
@@ -142,10 +146,14 @@ public abstract class Unit : MonoBehaviour
             }
 
             var overlap = Physics2D.OverlapBox(transform.position, _collider.size, 0, 1 << 10);
+
             //오버랩이 존재하며, 본인과 다른 태그의 히트박스일때
             if (overlap != null && !this.tag.Equals(overlap.tag))
             {
-                Debug.Log(string.Format("{0} :: {1}", this.name, overlap.name));
+                float distance = this.transform.position.x - overlap.transform.parent.position.x;
+
+                Debug.Log(string.Format("{0} :: {1} - {2}", this.name, overlap.name));
+                _rigidbody.AddForce(new Vector2(distance * 3,0), ForceMode2D.Impulse);
                 yield return wait;
                 //레이어10 (hitbox)에 해당하는 것이 충돌되었을때 지정된 초 동안 검사중지
             }
@@ -228,19 +236,27 @@ public abstract class Unit : MonoBehaviour
                 continue;
             }
 
+            float distance = this.transform.position.x - enemy.transform.position.x;
+
             Debug.DrawLine(transform.position, (Vector2)transform.position + Vector2.up + Vector2.left, Color.red);
 
-            if (enemy.transform.position.x + 1.2f < this.transform.position.x)
+            if (distance > 1.2f)
             {
                 direction = Direction.Left;
             }
-            else if (enemy.transform.position.x - 1.2f > this.transform.position.x)
+            else if (distance < -1.2f)
             {
                 direction = Direction.Right;
             }
-            else
+            else if (distance <= 1.2 && distance > 0)
             {
-                direction = 0;
+                look_direction = Direction.Left;
+                StopCoroutine("MoveCoroutine");
+            }
+            else if (distance >= -1.2 && distance < 0)
+            {
+                look_direction = Direction.Right;
+                StopCoroutine("MoveCoroutine");
             }
             yield return null;
         }

@@ -12,6 +12,7 @@ public class MenuManager : MonoBehaviour {
     private void Awake()
     {
         Instance = this;
+        DontDestroyOnLoad(this.gameObject);
     }
     private void OnDestroy()
     {
