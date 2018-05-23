@@ -15,12 +15,12 @@ TagManager:
   - UI
   - 
   - 
+  - Player
   - Unit
+  - Mob
+  - Hitbox
   - Ground
-  - HitBox
   - BackGround
-  - 
-  - 
   - 
   - 
   - 
