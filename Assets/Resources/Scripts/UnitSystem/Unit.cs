@@ -35,8 +35,6 @@ public abstract class Unit : MonoBehaviour
 
     protected virtual void Start()
     {
-        Debug.Log(_layerMask);
-
         mode = Mode.Capture;
         StartCoroutine("CheckOverlap");
         StartCoroutine("FindCoroutine");

@@ -9,6 +9,7 @@ public class InGameUI : MonoBehaviour {
 
     public GameObject SkillButtonLayout;
     public Button[] SkillButtons;
+    public GameObject[] Skills = new GameObject[5];
 
     private void Awake()
     {
@@ -26,6 +27,8 @@ public class InGameUI : MonoBehaviour {
     public void Summon(int index)
     {
         Debug.Log("Summon #" + index);
-        Summoner.Instance.SummonUnit<ArmorSpilt>();
+        if(index == 0)
+            Summoner.Instance.SummonUnit<ArmorSpilt>();
+        Skills[index].SetActive(true);
     }
 }
