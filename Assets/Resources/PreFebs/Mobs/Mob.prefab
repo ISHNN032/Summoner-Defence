@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61018296242765496}
   - component: {fileID: 50053605211835294}
   - component: {fileID: 114240549595633636}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Mob
   m_TagString: Mob
   m_Icon: {fileID: 0}
@@ -101,8 +101,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 10
   speed: 0.15
+  find_distance: 2
   disableTime: 1
   hitbox: {fileID: 1073709022465130, guid: 9bb766d5781765343b0e4239b587ca82, type: 2}
+  enemy_layer:
+    serializedVersion: 2
+    m_Bits: 768
 --- !u!212 &212104309076242284
 SpriteRenderer:
   m_ObjectHideFlags: 1

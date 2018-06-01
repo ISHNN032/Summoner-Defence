@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212759460390929644}
   - component: {fileID: 61929257818618456}
   - component: {fileID: 114276984194505916}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Mob_HitBox
   m_TagString: Mob
   m_Icon: {fileID: 0}

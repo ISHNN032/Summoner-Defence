@@ -20,7 +20,6 @@ public abstract class Unit : MonoBehaviour
 
     protected Rigidbody2D _rigidbody;
     protected BoxCollider2D _collider;
-    protected LayerMask _layerMask;
 
     [SerializeField] GameObject hitbox;
     [SerializeField] LayerMask enemy_layer;
@@ -97,12 +96,15 @@ public abstract class Unit : MonoBehaviour
                 continue;
             }
 
-            Debug.DrawRay(transform.forward, new Vector2((float)look_direction, 0) * find_distance, Color.cyan);
-            var hit = Physics2D.Raycast(transform.position, new Vector2((float)look_direction,0) , find_distance, 1 << enemy_layer);
+            Vector2 Raystart = transform.position;
+            Raystart.x += (float)look_direction * 0.5f;
+
+            Debug.DrawRay(Raystart, new Vector2((float)look_direction, 0) * find_distance, Color.cyan);
+
+            var hit = Physics2D.Raycast(Raystart, new Vector2((float)look_direction,0) , find_distance, enemy_layer);
             if (hit && !this.tag.Equals(hit.transform.tag))
             {
-                Debug.Log(string.Format("{0} Found The Enemy {1}", this.name, hit.transform.name));
-                //StartCoroutine("Combat", hit.transform.gameObject);
+                StartCoroutine("CombatCoroutine", hit.transform.gameObject);
                 yield return wait;
             }
             yield return null;
@@ -111,16 +113,19 @@ public abstract class Unit : MonoBehaviour
     
     protected IEnumerator CombatCoroutine(GameObject enemy)
     {
+        StopCoroutine("FindCoroutine");
         float distance;
+
         while (enemy != null)
         {
             //적과 일정 거리 이상 가까워지면 멈춘 후 공격
             distance = this.transform.position.x - enemy.transform.position.x;
 
-            if (Mathf.Abs(distance) <= 1.2)
+            if (Mathf.Abs(distance) <= 1.2f)
             {
                 direction = 0;
-                if(distance > 0)
+
+                if (distance > 0)
                 {
                     look_direction = Direction.Left;
                 }
@@ -128,11 +133,25 @@ public abstract class Unit : MonoBehaviour
                 {
                     look_direction = Direction.Right;
                 }
+
                 GameObject attack = GameObject.Instantiate(hitbox, this.transform);
                 attack.transform.Translate((float)look_direction * 0.5f, 0, 0);
+                yield return new WaitForSeconds(1);
             }
-            yield return new WaitForSeconds(1);
+            else
+            {
+                if (distance > 0)
+                {
+                    direction = Direction.Left;
+                }
+                else
+                {
+                    direction = Direction.Right;
+                }
+                yield return null;
+            }
         }
+        StartCoroutine("FindCoroutine");
     }
     
     protected IEnumerator EscortCoroutine()

@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212363118262956796}
   - component: {fileID: 61276745108495372}
   - component: {fileID: 114509058348854040}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Summon_HitBox
   m_TagString: Summon
   m_Icon: {fileID: 0}

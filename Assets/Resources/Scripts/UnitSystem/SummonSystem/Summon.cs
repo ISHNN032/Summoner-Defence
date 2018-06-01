@@ -4,11 +4,6 @@ using UnityEngine;
 
 public abstract class Summon<T> : Summon where T : Summon<T>{
 
-    protected override void Awake()
-    {
-        base.Awake();
-    }
-
     protected override void Start()
     {
         base.Start();

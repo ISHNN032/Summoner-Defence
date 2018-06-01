@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
+public enum GameMode { Exterminate, Siege, Protect }
+
 public class GameManager : MonoBehaviour {
     private static GameManager sInstance = null;
+
+    public GameMode Current_GameMode { get; private set; }
 
     public static GameManager Instance
     {
@@ -46,4 +51,26 @@ public class GameManager : MonoBehaviour {
     {
         SceneManager.LoadScene(scene_num);
     }
+
+    public void Initialize_Game(GameMode mode)
+    {
+        switch (mode) {
+            case GameMode.Exterminate:
+                {
+
+                    break;
+                }
+            case GameMode.Siege:
+                {
+
+                    break;
+                }
+            case GameMode.Protect:
+                {
+
+                    break;
+                }
+        }
+    }
+
 }

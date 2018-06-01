@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61194126282890404}
   - component: {fileID: 50121684448344106}
   - component: {fileID: 114941643682666716}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: ArmorSpilt
   m_TagString: Summon
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1407779505866288}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.6, y: 1, z: 0}
+  m_LocalPosition: {x: 5.56, y: 1.53, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -101,8 +101,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 10
   speed: 0.2
+  find_distance: 2
   disableTime: 1
   hitbox: {fileID: 1647715977504080, guid: 0689471b700aa064084b2fdf073163ac, type: 2}
+  enemy_layer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!212 &212095364184835616
 SpriteRenderer:
   m_ObjectHideFlags: 1
