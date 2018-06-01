@@ -6,11 +6,12 @@ public class PlayerController : MonoBehaviour {
     public static PlayerController Instance { get; private set; }
 
     [SerializeField] private float speed = 1f;
-    BoxCollider2D hitbox;
+    SpriteRenderer sprite;
 
     private void Awake()
     {
         Instance = this;
+        sprite = GetComponent<SpriteRenderer>();
     }
     private void OnDestroy()
     {
@@ -25,16 +26,16 @@ public class PlayerController : MonoBehaviour {
     public void MovePlayer(Direction direction)
     {
         StartCoroutine("Move", direction);
+        switch (direction)
+        {
+            case Direction.Left: sprite.flipX = true; break;
+            case Direction.Right: sprite.flipX = false; break;
+        }
     }
 
     public void StopPlayer()
     {
         StopCoroutine("Move");
-    }
-    
-    public void Summon<T>()
-    {
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

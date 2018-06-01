@@ -3,8 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Hitbox : MonoBehaviour {
+    public float attack_power { get; private set; }
 
-	void Start () {
+    private void Awake()
+    {
+        this.attack_power = this.GetComponentInParent<Unit>().attack_power;
+    }
+
+    void Start () {
         StartCoroutine("Active");
 	}
     IEnumerator Active()

@@ -8,6 +8,9 @@ public enum Mode { Capture = 0, Escort, Exterminate }
 public abstract class Unit : MonoBehaviour
 {
     [SerializeField] protected float health = 10;
+    [SerializeField] protected GameObject hp_bar;
+    [SerializeField] public readonly float attack_power = 3;
+
     [SerializeField] protected float speed = 0.3f;
     protected Direction direction;
     protected Direction look_direction;
@@ -21,6 +24,8 @@ public abstract class Unit : MonoBehaviour
     protected Rigidbody2D _rigidbody;
     protected BoxCollider2D _collider;
 
+    protected SpriteRenderer sprite;
+
     [SerializeField] GameObject hitbox;
     [SerializeField] LayerMask enemy_layer;
 
@@ -28,6 +33,7 @@ public abstract class Unit : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _collider = GetComponent<BoxCollider2D>();
+        sprite = GetComponent<SpriteRenderer>();
 
         wait = new WaitForSeconds(disableTime);
     }
@@ -47,6 +53,13 @@ public abstract class Unit : MonoBehaviour
         
         direction = direct;
         look_direction = direct;
+
+        switch (direct)
+        {
+            case Direction.Left: sprite.flipX = true; break;
+            case Direction.Right: sprite.flipX = false; break;
+        }
+
         StartCoroutine("MoveCoroutine");
     }
 
@@ -116,6 +129,8 @@ public abstract class Unit : MonoBehaviour
         StopCoroutine("FindCoroutine");
         float distance;
 
+        Direction p_direct = direction;
+
         while (enemy != null)
         {
             //적과 일정 거리 이상 가까워지면 멈춘 후 공격
@@ -128,10 +143,12 @@ public abstract class Unit : MonoBehaviour
                 if (distance > 0)
                 {
                     look_direction = Direction.Left;
+                    sprite.flipX = true;
                 }
                 else
                 {
                     look_direction = Direction.Right;
+                    sprite.flipX = false;
                 }
 
                 GameObject attack = GameObject.Instantiate(hitbox, this.transform);
@@ -152,6 +169,7 @@ public abstract class Unit : MonoBehaviour
             }
         }
         StartCoroutine("FindCoroutine");
+        direction = p_direct;
     }
     
     protected IEnumerator EscortCoroutine()
@@ -201,12 +219,14 @@ public abstract class Unit : MonoBehaviour
             //오버랩이 존재하며, 본인과 다른 태그의 히트박스일때
             if (overlap != null && !this.tag.Equals(overlap.tag))
             {
+                health -= overlap.GetComponent<Hitbox>().attack_power;
+                hp_bar.transform.localScale = new Vector3(health * 0.2f, 0.2f, 1);
                 float distance = this.transform.position.x - overlap.transform.parent.position.x;
-
-                Debug.Log(string.Format("{0} :: {1}", this.name, overlap.name));
                 _rigidbody.AddForce(new Vector2(distance * 3, 0), ForceMode2D.Impulse);
+
+                if (health <= 0) Destroy(this.gameObject);
                 yield return wait;
-                //레이어10 (hitbox)에 해당하는 것이 충돌되었을때 지정된 초 동안 검사중지
+                //레이어11 (hitbox)에 해당하는 것이 충돌되었을때 지정된 초 동안 검사중지
             }
             yield return null;
         }

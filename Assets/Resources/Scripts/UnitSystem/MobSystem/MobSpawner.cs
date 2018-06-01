@@ -10,7 +10,7 @@ public class MobSpawner : MonoBehaviour {
 
     public void Spawn()
     {
-        StartCoroutine(SpawnCoroutine<SampleMob>(1, new WaitForSeconds(1), new WaitForSeconds(2)));
+        StartCoroutine(SpawnCoroutine<SampleMob>(1, new WaitForSeconds(0.2f), new WaitForSeconds(2)));
     }
     //SpawnConrountune을 제네릭<>부분을 넣어 실행시킨다.
 
