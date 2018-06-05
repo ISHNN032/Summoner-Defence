@@ -81,7 +81,7 @@ public abstract class Unit : MonoBehaviour
 
     protected void Exterminate()
     {
-        StartCoroutine("EFindEnemy");
+        StartCoroutine("FindEnemy");
     }
 
     protected IEnumerator MoveCoroutine()

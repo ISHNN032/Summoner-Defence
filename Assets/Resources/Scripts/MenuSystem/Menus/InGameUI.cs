@@ -29,6 +29,7 @@ public class InGameUI : MonoBehaviour {
         Debug.Log("Summon #" + index);
         if(index == 0)
             Summoner.Instance.SummonUnit<ArmorSpilt>();
-        Skills[index].SetActive(true);
+        else
+            Skills[index].SetActive(true);
     }
 }
