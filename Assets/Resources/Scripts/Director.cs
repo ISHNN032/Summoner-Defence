@@ -3,10 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Director : MonoBehaviour {
-    [SerializeField] private GameObject MenuManager;
 
     public void EnableMenu()
     {
-        MenuManager.SetActive(true);
+        MenuManager.Instance.OpenMenu<DialogUI>();
+        DialogUI.Instance.SetDIalog("Main_01");
+    }
+    public void LoadGameUI()
+    {
+        MenuManager.Instance.OpenMenu<InGameUI>();
+    }
+    public void ChangeDialog(string DialogName)
+    {
+        Debug.Log("Changed" + DialogName);
+        MenuManager.Instance.OpenMenu<DialogUI>();
+        DialogUI.Instance.SetDIalog(DialogName);
     }
 }

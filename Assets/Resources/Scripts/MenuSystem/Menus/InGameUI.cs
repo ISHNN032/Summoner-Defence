@@ -11,8 +11,9 @@ public class InGameUI : Menu<InGameUI> {
     public Button[] SkillButtons;
     public GameObject[] Skills = new GameObject[5];
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         PauseButton.onClick.AddListener(() => {
             MenuManager.Instance.OpenMenu<PauseMenu>();
         });

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Summon<T> : Summon where T : Summon<T>{
+public abstract class Summon<T> : Summon where T : Summon<T> {
 
     protected override void Start()
     {
         base.Start();
-        Move(Direction.Right);
+        Move(startdirection);
     }
 
     protected virtual void Update()

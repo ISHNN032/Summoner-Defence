@@ -9,7 +9,7 @@ public class DialogUI : Menu<DialogUI> {
 
     List<Dialog> dialogs = new List<Dialog>();
 
-    int count = 0;
+    int count = 1;
 
     protected override void Awake()
     {
@@ -26,14 +26,20 @@ public class DialogUI : Menu<DialogUI> {
     
     public void OnCliked()
     {
-        if (++count == dialogs.Capacity)
+        if (count >= dialogs.Count)
         {
-            count = 0;
+            Debug.Log("stop");
+            count = 1;
             Time.timeScale = 1;
             MenuManager.Instance.CloseMenu();
         }
-        d_name.text = dialogs[count].name;
-        d_script.text = dialogs[count].script;
+        else
+        {
+            Debug.Log(count);
+            d_name.text = dialogs[count].name;
+            d_script.text = dialogs[count].script;
+            count++;
+        }
     }
 
     public override void OnBackPressed()

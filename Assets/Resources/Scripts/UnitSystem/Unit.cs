@@ -16,6 +16,8 @@ public abstract class Unit : MonoBehaviour
     protected Direction look_direction;
     protected Mode mode;
 
+    [SerializeField] protected Direction startdirection = 0;
+
     [SerializeField] protected float find_distance = 2f;
 
     [SerializeField] protected float disableTime = 1;
@@ -41,6 +43,7 @@ public abstract class Unit : MonoBehaviour
     protected virtual void Start()
     {
         mode = Mode.Capture;
+
         StartCoroutine("CheckOverlap");
         StartCoroutine("FindCoroutine");
     }
