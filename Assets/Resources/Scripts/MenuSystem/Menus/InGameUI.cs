@@ -29,11 +29,6 @@ public class InGameUI : Menu<InGameUI> {
         Debug.Log("Summon #" + index);
         if(index == 0)
             Summoner.Instance.SummonUnit<ArmorSpilt>();
-        else if(index == 2)
-        {
-            MenuManager.Instance.OpenMenu<DialogUI>();
-            DialogUI.Instance.SetDIalog("Main_01");
-        }
         else
             Skills[index].SetActive(true);
     }

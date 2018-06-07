@@ -17,6 +17,8 @@ public class MenuManager : MonoBehaviour {
         DontDestroyOnLoad(this.gameObject);
 
         OpenMenu<InGameUI>();
+        OpenMenu<DialogUI>();
+        DialogUI.Instance.SetDIalog("Main_01");
     }
     private void OnDestroy()
     {
