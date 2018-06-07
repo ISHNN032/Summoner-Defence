@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InGameUI : MonoBehaviour {
+public class InGameUI : Menu<InGameUI> {
     public Button PauseButton;
 
     public GameObject SkillButtonLayout;
@@ -29,7 +29,17 @@ public class InGameUI : MonoBehaviour {
         Debug.Log("Summon #" + index);
         if(index == 0)
             Summoner.Instance.SummonUnit<ArmorSpilt>();
+        else if(index == 2)
+        {
+            MenuManager.Instance.OpenMenu<DialogUI>();
+            DialogUI.Instance.SetDIalog("Main_01");
+        }
         else
             Skills[index].SetActive(true);
+    }
+
+    public override void OnBackPressed()
+    {
+        MenuManager.Instance.OpenMenu<PauseMenu>();
     }
 }

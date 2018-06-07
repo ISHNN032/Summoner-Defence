@@ -5,7 +5,9 @@ using UnityEngine;
 public class MenuManager : MonoBehaviour {
     public static MenuManager Instance { get; private set; }
 
+    public InGameUI InGameUIPreFab;
     public PauseMenu PauseMenuPreFab;
+    public DialogUI DialogUIPreFab;
 
     private Stack<Menu> menuStack = new Stack<Menu>();
 
@@ -13,6 +15,8 @@ public class MenuManager : MonoBehaviour {
     {
         Instance = this;
         DontDestroyOnLoad(this.gameObject);
+
+        OpenMenu<InGameUI>();
     }
     private void OnDestroy()
     {
@@ -34,16 +38,26 @@ public class MenuManager : MonoBehaviour {
     {
         var instance = menuStack.Peek();
         Destroy(instance.gameObject);
+        
+        menuStack.Pop();
 
         if (menuStack.Count > 0)
-            menuStack.Pop().gameObject.SetActive(true);
+            menuStack.Peek().gameObject.SetActive(true);
     }
 
     public T GetPreFab<T>() where T : Menu
     {
-        if(typeof(T) == typeof(PauseMenu))
+        if (typeof(T) == typeof(InGameUI))
+        {
+            return InGameUIPreFab as T;
+        }
+        if (typeof(T) == typeof(PauseMenu))
         {
             return PauseMenuPreFab as T;
+        }
+        if(typeof(T) == typeof(DialogUI))
+        {
+            return DialogUIPreFab as T;
         }
         throw new MissingReferenceException();
     }
