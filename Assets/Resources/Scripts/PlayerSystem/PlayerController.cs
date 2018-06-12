@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private float speed = 1f;
     SpriteRenderer sprite;
 
+    public Direction current_direction;
+
     private void Awake()
     {
         Instance = this;
@@ -31,6 +33,7 @@ public class PlayerController : MonoBehaviour {
             case Direction.Left: sprite.flipX = true; break;
             case Direction.Right: sprite.flipX = false; break;
         }
+        current_direction = direction;
     }
 
     public void StopPlayer()

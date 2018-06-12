@@ -10,7 +10,7 @@ public class MobSpawner : MonoBehaviour {
 
     public void Spawn()
     {
-        StartCoroutine(SpawnCoroutine<SampleMob>(1, new WaitForSeconds(0.2f), new WaitForSeconds(2)));
+        StartCoroutine(SpawnCoroutine<SampleMob>(6, new WaitForSeconds(0.2f), new WaitForSeconds(2)));
     }
     //SpawnConrountune을 제네릭<>부분을 넣어 실행시킨다.
 
@@ -20,7 +20,8 @@ public class MobSpawner : MonoBehaviour {
         yield return startTime;
         while (number-- > 0)
         {
-            Instantiate<Mob>(prefab);
+            Mob mob = Instantiate<Mob>(prefab);
+            mob.transform.position = new Vector2(25,0);
             yield return delay;
         }
     }

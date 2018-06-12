@@ -157,6 +157,12 @@ AnimationClip:
       value: {fileID: 0}
     - time: 6.0666666
       value: {fileID: 0}
+    - time: 6.0833335
+      value: {fileID: 0}
+    - time: 6.1
+      value: {fileID: 0}
+    - time: 6.116667
+      value: {fileID: 0}
     attribute: m_Follow
     path: 
     classID: 114
@@ -228,12 +234,15 @@ AnimationClip:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 6.0833335
+    m_StopTime: 6.1333337
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

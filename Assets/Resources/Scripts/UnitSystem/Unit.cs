@@ -57,12 +57,6 @@ public abstract class Unit : MonoBehaviour
         direction = direct;
         look_direction = direct;
 
-        switch (direct)
-        {
-            case Direction.Left: sprite.flipX = true; break;
-            case Direction.Right: sprite.flipX = false; break;
-        }
-
         StartCoroutine("MoveCoroutine");
     }
 
@@ -84,7 +78,8 @@ public abstract class Unit : MonoBehaviour
 
     protected void Exterminate()
     {
-        StartCoroutine("FindEnemy");
+        StopCoroutine("EscortCoroutine");
+        StartCoroutine("FindCoroutine");
     }
 
     protected IEnumerator MoveCoroutine()
@@ -97,6 +92,13 @@ public abstract class Unit : MonoBehaviour
                 continue;
             }
             this.transform.Translate(Vector2.Lerp(Vector2.zero, new Vector2((float)direction * speed, 0), 0.1f));
+
+            switch (direction)
+            {
+                case Direction.Left: sprite.flipX = true; break;
+                case Direction.Right: sprite.flipX = false; break;
+            }
+
             //look_direction = direction;
             yield return null;
         }
@@ -220,7 +222,7 @@ public abstract class Unit : MonoBehaviour
             var overlap = Physics2D.OverlapBox(transform.position, _collider.size, 0, 1 << 11);
 
             //오버랩이 존재하며, 본인과 다른 태그의 히트박스일때
-            if (overlap != null && !this.tag.Equals(overlap.tag))
+            if (overlap != null && !this.tag.Equals(overlap.tag) && !(overlap.tag == "Player"))
             {
                 health -= overlap.GetComponent<Hitbox>().attack_power;
                 hp_bar.transform.localScale = new Vector3(health * 0.2f, 0.2f, 1);

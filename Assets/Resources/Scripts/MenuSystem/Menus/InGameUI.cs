@@ -31,7 +31,9 @@ public class InGameUI : Menu<InGameUI> {
         if(index == 0)
             Summoner.Instance.SummonUnit<ArmorSpilt>();
         else
-            Skills[index].SetActive(true);
+        {
+            Instantiate(Skills[index], PlayerController.Instance.transform);
+        }
     }
 
     public override void OnBackPressed()
